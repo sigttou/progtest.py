@@ -31,11 +31,11 @@ VALGRIND_CHECK = True
 def main():
     tests = [os.path.join('./tests/', o) for o in os.listdir('./tests/') if os.path.isdir(os.path.join('./tests/', o))]
     for test in tests:
-        input = open(test + '/in')
-        exp_output = open(test + '/out').read()
+        input = open(test + '/in') if os.path.isfile(test + '/in') else None
+        exp_output = open(test + '/out').read() if os.path.isfile(test + '/out') else ''
         sys.stdout.write('Test: ' + os.path.basename(test))
 
-        args = open(test + '/args') if os.path.isfile(test + '/args') else ''
+        args = open(test + '/args').read() if os.path.isfile(test + '/args') else ''
         val_check = False if os.path.isfile(test + '/noval') else VALGRIND_CHECK
         exp_ret = int(open(test + '/ret').read()) if os.path.isfile(test + '/ret') else 0
 
