@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Copyright (c) 2015, David Bidner <david -at- crap.solutions>
+Copyright (c) 2015, 2016 David Bidner <david -at- crap.solutions>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted,
 provided that the above copyright notice and this permission notice appear in all copies.
@@ -12,7 +12,7 @@ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING O
 USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 # progtest.py - A simple tool used to apply I/O diffs on a given binary
-# Further Information: http://crap.solutions/progtest.html - https://github.com/sigttou/progtest
+# Further Information: https://crap.solutions/pages/progtest.html - https://github.com/sigttou/progtest
 
 import sys
 import os
