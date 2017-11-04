@@ -35,9 +35,11 @@ VALGRIND_ARGS = '--leak-check=full --show-leak-kinds=all --track-origins=yes --q
 BINARY = sys.argv[1] if len(sys.argv) > 1 else "./testbin"
 RESULTS_DIR = mkdtemp()
 VALGRIND_CHECK = True
+TIMEOUT = 10
 ```
 * The **VAL_ERR** is used to find out if the error was returned by the program or `valgrind`.
 * The **VALGRIND_ARGS** are written to provide good debugging information. Make sure your program was compiled with `-g`.
 * The **BINARY** is taken from the command line arguments, if not provided *testbin* is used.
 * The **RESULTS_DIR** is placed in `/tmp/` per default.
 * The **VALGRIND_CHECK** is activated by default.
+* The **TIMEOUT** is the maximum amount of seconds a testcase can run.

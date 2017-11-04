@@ -26,6 +26,7 @@ VALGRIND_ARGS = '--leak-check=full --show-leak-kinds=all --track-origins=yes --q
 BINARY = sys.argv[1] if len(sys.argv) > 1 else "./testbin"
 RESULTS_DIR = mkdtemp()
 VALGRIND_CHECK = True
+TIMEOUT = 10
 
 
 def main():
@@ -40,6 +41,8 @@ def main():
         exp_ret = int(open(test + '/ret').read()) if os.path.isfile(test + '/ret') else 0
 
         call = []
+        call.append('timeout')
+        call.append(str(TIMEOUT))
         if val_check:
             call.append('valgrind')
             call += VALGRIND_ARGS.split()
