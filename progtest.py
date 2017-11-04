@@ -28,6 +28,10 @@ RESULTS_DIR = mkdtemp()
 VALGRIND_CHECK = True
 TIMEOUT = 10
 
+RED = '\033[0;31m'
+GREEN = '\033[0;32m'
+NOCOL = '\033[0m'
+
 
 def main():
     tests = [os.path.join('./tests/', o) for o in os.listdir('./tests/') if os.path.isdir(os.path.join('./tests/', o))]
@@ -70,12 +74,14 @@ def main():
             difffile = open(RESULTS_DIR + '/' + os.path.basename(test) + '.diff', 'w+')
             difffile.writelines(diff)
             print('+++ Diff error, see {} for details +++'.format(difffile.name))
+        else:
+            print('Diff ' + GREEN + 'OK' + NOCOL)
         if(diff or fail):
             outfile = open(RESULTS_DIR + '/' + os.path.basename(test) + '.out', 'w+')
             outfile.write(out)
-            sys.stdout.write('..FAIL (see {} for output)\n'.format(outfile.name))
+            sys.stdout.write('..' + RED + 'FAIL' + NOCOL + '(see {} for output)\n'.format(outfile.name))
         else:
-            sys.stdout.write('..OK\n')
+            sys.stdout.write('..ALL:' + GREEN + 'OK' + NOCOL + '\n')
 
 
 if __name__ == '__main__':
