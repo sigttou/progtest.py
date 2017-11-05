@@ -36,6 +36,7 @@ NOCOL = '\033[0m'
 
 def main():
     tests = [os.path.join('./tests/', o) for o in os.listdir('./tests/') if os.path.isdir(os.path.join('./tests/', o))]
+    tests.sort()
     for test in tests:
         input = open(test + '/in') if os.path.isfile(test + '/in') else None
         exp_output = open(test + '/out').read() if os.path.isfile(test + '/out') else ''
@@ -57,34 +58,30 @@ def main():
         call.append(BINARY)
         call += args.split()
 
-        fail = False
         try:
             out = check_output(call, stdin=input).decode()
         except CalledProcessError as grepexc:
             out = grepexc.output.decode()
-            fail = True
-            if grepexc.returncode == exp_ret:
-                fail = False
-                break
-            elif grepexc.returncode == VAL_ERR:
-                print('    Valgrind error: {}'.format(val_logfile))
-            elif grepexc.returncode == TIMEOUT_ERR:
-                print('    Test timed out!')
-            else:
-                print('    Test had the Wrong return value: {} should be: {}'.format(grepexc.returncode, exp_ret))
+            if grepexc.returncode != exp_ret:
+                if grepexc.returncode == VAL_ERR:
+                    print('    Valgrind error: {}'.format(val_logfile))
+                elif grepexc.returncode == TIMEOUT_ERR:
+                    print('    Test timed out!')
+                    print(RED + 'FAIL' + NOCOL)
+                    continue
+                else:
+                    print('    Test had the Wrong return value: {} should be: {}'.format(grepexc.returncode, exp_ret))
 
         diff = list(unified_diff(exp_output.splitlines(1), out.splitlines(1), fromfile='exp_output', tofile='output'))
         if(diff):
             difffile = open(RESULTS_DIR + '/' + os.path.basename(test) + '.diff', 'w+')
             difffile.writelines(diff)
-            print('    Output does not match: {}'.format(difffile.name))
-            fail = True
-        if(fail):
             outfile = open(RESULTS_DIR + '/' + os.path.basename(test) + '.out', 'w+')
             outfile.write(out)
-            print(RED + 'FAIL' + NOCOL + ': {}'.format(outfile.name))
+            print('    Output does not match: {} {}'.format(difffile.name, outfile.name))
+            print(RED + 'FAIL' + NOCOL)
         else:
-            print(GREEN + 'OK' + NOCOL)
+            print(GREEN + 'GOOD' + NOCOL)
 
 
 if __name__ == '__main__':
