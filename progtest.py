@@ -12,7 +12,7 @@ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING O
 USE OR PERFORMANCE OF THIS SOFTWARE.
 """
 # progtest.py - A simple tool used to apply I/O diffs on a given binary
-# Further Information: https://crap.solutions/pages/progtest.html - https://github.com/sigttou/progtest
+# Further Information: https://crap.solutions/pages/progtest.html - https://github.com/sigttou/progtest.py
 
 import sys
 import os
