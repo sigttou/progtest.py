@@ -39,6 +39,9 @@ NOCOL = '\033[0m'
 def main():
     tests = [os.path.join('./tests/', o) for o in os.listdir('./tests/') if os.path.isdir(os.path.join('./tests/', o))]
     tests.sort()
+    if not os.path.isfile(BINARY):
+        print("Binary not found")
+        exit()
     for test in tests:
         input = open(test + '/in') if os.path.isfile(test + '/in') else None
         exp_output = open(test + '/out').read() if os.path.isfile(test + '/out') else ''
