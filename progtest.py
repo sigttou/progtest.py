@@ -17,6 +17,7 @@ USE OR PERFORMANCE OF THIS SOFTWARE.
 import sys
 import os
 import os.path
+import shutil
 from subprocess import check_output, CalledProcessError
 from difflib import unified_diff
 from tempfile import mkdtemp
@@ -28,6 +29,7 @@ RESULTS_DIR = mkdtemp()
 VALGRIND_CHECK = True
 TIMEOUT = 10
 TIMEOUT_ERR = 124
+FIREJAIL_CONFIG = './test_jail.profile'
 
 RED = '\033[0;31m'
 GREEN = '\033[0;32m'
@@ -49,6 +51,12 @@ def main():
         call = []
         call.append('timeout')
         call.append(str(TIMEOUT))
+        if shutil.which("firejail") and not val_check:
+            call.append('firejail')
+            call.append('-c')
+            call.append('--net=none')
+            call.append('--shell=none')
+            call.append('--profile=' + FIREJAIL_CONFIG)
         if val_check:
             call.append('valgrind')
             call += VALGRIND_ARGS.split()
