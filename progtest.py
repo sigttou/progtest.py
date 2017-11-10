@@ -51,11 +51,11 @@ def main():
         call = []
         call.append('timeout')
         call.append(str(TIMEOUT))
-        if shutil.which("firejail") and not val_check:
+        if shutil.which("firejail"):
             call.append('firejail')
-            call.append('-c')
             call.append('--net=none')
             call.append('--shell=none')
+            call.append('--allow-debuggers')
             call.append('--profile=' + FIREJAIL_CONFIG)
         if val_check:
             call.append('valgrind')
