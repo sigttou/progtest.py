@@ -5,6 +5,7 @@ Simple test script used to compare output of binary (valgrind and return code ch
 * Place your tests into the `tests/` directory
 * Place your binary into the current directory
 * Change `progtest.py` to your needs
+* Added `firejail` - TODO here, allow a test user
 
 ## Example:
 ```
