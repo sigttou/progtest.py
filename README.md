@@ -21,13 +21,18 @@ Simple test script used to compare output of binary (valgrind and return code ch
     │   ├── noval
     │   └── out
     └── w_ret_code
+    │   ├── in
+    │   ├── out
+    │   └── ret
+    └── w_grep
         ├── in
-        ├── out
+        ├── grep
         └── ret
 ```
-* There are 3 testcases (`simple1`, `wo_valgrind`, `w_ret_code`).
+* There are 4 testcases (`simple1`, `wo_valgrind`, `w_ret_code`, `w_grep`).
 * If you don't want a test to be run with `valgrind` place a `noval` file into the test directory
 * If your testcase returns with something different than 0 create a `ret` file inside the test directory, containing the return code
+* If your testcase should check the output for the occurrence of a string, then `grep` should be used instead of `out`
 
 ## Configure Options:
 ```

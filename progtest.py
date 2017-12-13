@@ -45,6 +45,12 @@ def main():
     for test in tests:
         input = open(test + '/in') if os.path.isfile(test + '/in') else None
         exp_output = open(test + '/out').read() if os.path.isfile(test + '/out') else ''
+        grep = None
+        if os.path.isfile(test + '/grep'):
+            if os.path.isfile(test + '/out'):
+                print('WARNING: Ignoring grep, because out is given')
+            else:
+                grep = open(test + '/grep').read()
         print('Running test: ' + os.path.basename(test))
 
         args = open(test + '/args').read() if os.path.isfile(test + '/args') else ''
@@ -83,6 +89,14 @@ def main():
                 else:
                     print('    Test had the Wrong return value: {} should be: {}'.format(grepexc.returncode, exp_ret))
 
+        if grep != None:
+            if out.count(grep) == 0:
+                print('    GREP did not find {}'.format(grep))
+                print(RED + 'FAIL' + NOCOL)
+                continue
+            else:
+                print(GREEN + 'GOOD' + NOCOL)
+                continue
         diff = list(unified_diff(exp_output.splitlines(1), out.splitlines(1), fromfile='exp_output', tofile='output'))
         if(diff):
             difffile = open(RESULTS_DIR + '/' + os.path.basename(test) + '.diff', 'w+')
